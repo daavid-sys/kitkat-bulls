@@ -7,6 +7,7 @@ Hackathon project for Big Berlin Hack 2026 (Reonic Track). We're building an AI-
 Before doing any work, read `.context/index.md` — it links to everything you need:
 
 **Plans:**
+- `.context/plans/principles.md` — **read first.** core experience, build order, in/out of scope
 - `.context/plans/project.md` — what, why, who
 - `.context/plans/architecture.md` — tech stack, system flow
 - `.context/plans/constraints.md` — hackathon rules, deadlines, partner tech
@@ -31,6 +32,7 @@ The 3D model of the homeowner's actual house becomes an interactive proposal —
 ## Repo structure
 ```
 .context/              — AI agent context (plans/ + research/)
+app/                   — 3D visualization web app (address → real-time 3D house)
 Exp 3D-Modells/        — Reonic photogrammetry .glb files
 reonic_legacy_demo.json — Raw transcription of Reonic demo
 ```

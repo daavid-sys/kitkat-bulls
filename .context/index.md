@@ -3,6 +3,7 @@
 Hackathon project for Big Berlin Hack 2026 (Reonic Track). Read these files to understand everything.
 
 ## Plans
+- [principles.md](./plans/principles.md) — **Read first.** Core experience, build order, what's in/out of scope
 - [project.md](./plans/project.md) — What we're building, why, and for whom
 - [architecture.md](./plans/architecture.md) — Tech stack, system flow, component breakdown
 - [constraints.md](./plans/constraints.md) — Hackathon rules, deadlines, partner tech requirements
@@ -21,6 +22,7 @@ kitkat-bulls/
 │   ├── index.md               ← you are here
 │   ├── links.md               ← Figma, APIs, partner tech
 │   ├── plans/
+│   │   ├── principles.md      ← core experience & build order (read first)
 │   │   ├── project.md         ← what, why, who
 │   │   ├── architecture.md    ← tech stack & system flow
 │   │   └── constraints.md     ← hackathon rules & deadlines
