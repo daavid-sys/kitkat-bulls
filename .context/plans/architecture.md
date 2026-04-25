@@ -16,7 +16,7 @@ Address Input → Google Solar API (roof data + segments)
                     ↓
             CesiumJS viewer (browser 3D) + panel placement algorithm
                     ↓
-            Gemini Flash (analyze roof screenshot → proposal text + ROI)
+            Gemini 3.1 Pro (analyze roof screenshot → proposal text + ROI)
                     ↓
             Gradium (voice narration of proposal)
                     ↓
@@ -34,7 +34,7 @@ Address Input → Google Solar API (roof data + segments)
 - Extract roof polygons from Google Solar API response (provides roof segment data)
 - **Greedy rectangle-packing algorithm** for panel placement — start top-left, respect pitch, avoid edges/obstructions
 - No complex ML needed — Solar API already provides segment boundaries
-- For extra impressiveness: Gemini Flash vision can analyze a satellite/3D screenshot to identify obstructions
+- For extra impressiveness: Gemini 3.1 Pro vision can analyze a satellite/3D screenshot to identify obstructions
 
 ### 3. 3D Interactive Proposal (The Hero Moment)
 - **CesiumJS** for rendering Google 3D Tiles in the browser — fastest path to "real house in 3D"
@@ -44,10 +44,12 @@ Address Input → Google Solar API (roof data + segments)
 - Alternative: Three.js with `.glb` models if API keys are slow to provision
 
 ### 4. Proposal Generation
-- **Gemini Flash** (vision + reasoning):
+- **Gemini 3.1 Pro** (`gemini-3.1-pro-preview`) for heavy reasoning:
   - Analyze roof data → estimate system size, annual generation, costs
   - Generate human-readable proposal with ROI breakdown
-  - ~100ms per call, free tier: 15 req/min
+  - Vision analysis of roof screenshots to identify obstructions
+- **Gemini 2.5 Flash** (`gemini-2.5-flash`) for utility calls:
+  - Quick address parsing, unit conversions, formatting
 - Inputs: roof area, panel count, local electricity rates, solar irradiance
 - Outputs: system cost, annual savings, payback period, 25-year ROI
 
