@@ -117,6 +117,6 @@ The single most impressive comparison:
 
 > **Legacy**: Installer spends 5 minutes manually tracing a roof outline, dragging panels one by one, selecting an inverter, checking voltage ranges...
 >
-> **Us**: Homeowner types an address. 3 seconds later, their actual house appears in 3D with panels already on the roof, a voice says "Based on your roof, we recommend 16 panels saving you €1,400 per year", and the full proposal is ready.
+> **Us**: Homeowner types an address. Their actual house appears in 3D — and it's not just a model, it's an **interactive proposal**. Panels are already on the roof. Click to add or remove them, see costs update live. A voice says "Based on your roof, we recommend 16 panels saving you €1,400 per year." Toggle battery storage, see the break-even shift. The 3D model IS the proposal.
 >
 > **That's the 2-minute demo.**

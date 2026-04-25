@@ -36,10 +36,11 @@ Address Input → Google Solar API (roof data + segments)
 - No complex ML needed — Solar API already provides segment boundaries
 - For extra impressiveness: Gemini Flash vision can analyze a satellite/3D screenshot to identify obstructions
 
-### 3. 3D Visualization (The Hero Moment)
+### 3. 3D Interactive Proposal (The Hero Moment)
 - **CesiumJS** for rendering Google 3D Tiles in the browser — fastest path to "real house in 3D"
 - Overlay solar panel meshes on detected roof segments
-- Interactive: rotate, zoom, toggle panels on/off
+- **The 3D model IS the proposal**: click panels to add/remove, see costs update live, toggle battery storage, watch break-even shift in real-time
+- Interactive: rotate, zoom, toggle panels on/off, drag to reposition
 - Alternative: Three.js with `.glb` models if API keys are slow to provision
 
 ### 4. Proposal Generation
