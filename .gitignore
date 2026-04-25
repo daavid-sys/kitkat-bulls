@@ -1,3 +1,6 @@
+# AI context — always track
+!.context/
+
 # Dependencies
 node_modules/
 venv/
