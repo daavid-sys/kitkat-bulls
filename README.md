@@ -8,8 +8,10 @@ Building an AI-powered solution that generates renewable energy system designs f
 
 ## Team
 
-- TBD
+- Scando
+- Muna
+- Daavid
 
 ## Getting Started
 
-TBD
+
