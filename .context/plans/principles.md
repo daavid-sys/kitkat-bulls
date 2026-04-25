@@ -37,7 +37,13 @@ We are optimizing for an impressive 2-minute demo on a known address, not for a 
 
 Implication: don't spend time on edge cases the demo won't hit. Spend it on the hero moment.
 
-## Principle 5 — Build the spine before the skin
+## Principle 5 — Mobile-first, desktop-respectful
+
+Homeowners look up their roof on their phone, not on a desktop. We design for **one-handed mobile use first** (thumb-reachable address bar at the bottom, big touch targets, bottom-sheet result panel) and let the desktop layout fall out of the same components at a wider breakpoint.
+
+Implication: every new screen is mocked at 375×812 (iPhone width) before any desktop polish. The 3D viewer is full-bleed; UI floats over it. Anything that requires hover, right-click, or precise mouse aiming gets redesigned.
+
+## Principle 6 — Build the spine before the skin
 
 The current build order is:
 1. **3D visualization layer** — address input → real 3D model rendered in the browser. *(in progress)*
