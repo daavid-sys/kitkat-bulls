@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build
+dist/
+build/
+*.egg-info/
+
+# Data / models (keep repo light)
+*.ply
+*.obj
+*.glb
+*.gltf
+data/
+models/
+
+# Misc
+*.log
+.cache/
