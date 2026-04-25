@@ -5,11 +5,17 @@ Hackathon project for Big Berlin Hack 2026 (Reonic Track). We're building an AI-
 
 ## Read context first
 Before doing any work, read `.context/index.md` — it links to everything you need:
-- `.context/project.md` — what, why, who
-- `.context/architecture.md` — tech stack, system flow
-- `.context/constraints.md` — hackathon rules, deadlines, partner tech
-- `.context/legacy.md` — what Reonic has today vs what we're building
-- `.context/data.md` — datasets, APIs, 3D models available
+
+**Plans:**
+- `.context/plans/project.md` — what, why, who
+- `.context/plans/architecture.md` — tech stack, system flow
+- `.context/plans/constraints.md` — hackathon rules, deadlines, partner tech
+
+**Research:**
+- `.context/research/competitors.md` — competitor landscape
+- `.context/research/legacy-vs-ai.md` — Reonic's current flow vs our AI-native flow
+- `.context/research/hackathon.md` — full hackathon manual & rules
+- `.context/research/data.md` — datasets, APIs, 3D models
 
 ## Key decisions made
 - **Agent-native**: no fixed language preference, use whatever works best per component
@@ -24,13 +30,8 @@ The 3D model of the homeowner's actual house becomes an interactive proposal —
 
 ## Repo structure
 ```
-.context/          — AI agent context files (start here)
-Exp 3D-Modells/    — Reonic photogrammetry .glb files
-ARCHITECTURE.md    — Detailed tech architecture
-COMPETITORS.md     — Competitor analysis
-HACKATHON.md       — Full hackathon rules & manual
-LINKS.md           — Figma, APIs, partner tech links
-REONIC_LEGACY_VS_AI.md — Legacy 17-step flow vs our AI-native flow
+.context/              — AI agent context (plans/ + research/)
+Exp 3D-Modells/        — Reonic photogrammetry .glb files
 reonic_legacy_demo.json — Raw transcription of Reonic demo
 ```
 
