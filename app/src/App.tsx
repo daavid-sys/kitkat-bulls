@@ -8,7 +8,7 @@ type Status =
   | { kind: "idle" }
   | { kind: "loading"; query: string }
   | { kind: "ready"; query: string; location: Location }
-  | { kind: "error"; message: string };
+  | { kind: "error"; query: string; message: string };
 
 export function App() {
   const [status, setStatus] = useState<Status>({ kind: "idle" });
@@ -23,9 +23,14 @@ export function App() {
     } catch (err) {
       setStatus({
         kind: "error",
+        query: trimmed,
         message: err instanceof Error ? err.message : "Could not find that address.",
       });
     }
+  }, []);
+
+  const handleReset = useCallback(() => {
+    setStatus({ kind: "idle" });
   }, []);
 
   return (
@@ -35,35 +40,34 @@ export function App() {
         loading={status.kind === "loading"}
       />
 
-      <div className="overlay overlay--top">
-        <header className="brand">
-          <span className="brand__mark" aria-hidden>◆</span>
-          <span className="brand__name">Kitkat Bulls</span>
-          <span className="brand__sep">·</span>
-          <span className="brand__tag">Solar, designed for your roof.</span>
-        </header>
+      <header className="brand" aria-label="Kitkat Bulls">
+        <span className="brand__mark" aria-hidden>◆</span>
+        <span className="brand__name">Kitkat Bulls</span>
+      </header>
+
+      <div className="dock">
+        {status.kind === "ready" && (
+          <ResultSheet
+            query={status.query}
+            location={status.location}
+            onChangeAddress={handleReset}
+          />
+        )}
+
+        {status.kind === "error" && (
+          <div className="toast toast--error" role="alert">
+            <strong>Couldn't find that address.</strong>
+            <span>{status.message}</span>
+          </div>
+        )}
 
         <AddressBar
           onSubmit={handleSubmit}
           loading={status.kind === "loading"}
           subtitle={subtitleFor(status)}
+          collapsed={status.kind === "ready"}
         />
       </div>
-
-      {status.kind === "ready" && (
-        <div className="overlay overlay--bottom">
-          <ResultCard query={status.query} location={status.location} />
-        </div>
-      )}
-
-      {status.kind === "error" && (
-        <div className="overlay overlay--bottom">
-          <div className="error-card" role="alert">
-            <strong>Couldn't load that address.</strong>
-            <span>{status.message}</span>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
@@ -71,7 +75,7 @@ export function App() {
 function subtitleFor(status: Status): string {
   switch (status.kind) {
     case "idle":
-      return "Type an address. We'll pull a real-time 3D model of your house.";
+      return "Type an address. We'll show your house in 3D.";
     case "loading":
       return `Locating "${status.query}"…`;
     case "ready":
@@ -81,21 +85,33 @@ function subtitleFor(status: Status): string {
   }
 }
 
-function ResultCard({ query, location }: { query: string; location: Location }) {
+interface ResultSheetProps {
+  query: string;
+  location: Location;
+  onChangeAddress: () => void;
+}
+
+function ResultSheet({ query, location, onChangeAddress }: ResultSheetProps) {
   return (
-    <div className="result-card">
-      <div className="result-card__row">
-        <span className="result-card__label">Address</span>
-        <span className="result-card__value">{location.formattedAddress ?? query}</span>
+    <div className="sheet" role="region" aria-label="Result">
+      <div className="sheet__handle" aria-hidden />
+      <div className="sheet__row">
+        <div className="sheet__label">Showing</div>
+        <button
+          type="button"
+          className="sheet__change"
+          onClick={onChangeAddress}
+          aria-label="Change address"
+        >
+          Change
+        </button>
       </div>
-      <div className="result-card__row">
-        <span className="result-card__label">Coordinates</span>
-        <span className="result-card__value">
-          {location.latitude.toFixed(5)}, {location.longitude.toFixed(5)}
-        </span>
+      <div className="sheet__address">{location.formattedAddress ?? query}</div>
+      <div className="sheet__coords">
+        {location.latitude.toFixed(5)}, {location.longitude.toFixed(5)}
       </div>
       <button className="cta" type="button" disabled>
-        Design my solar setup
+        <span className="cta__label">Design my solar setup</span>
         <span className="cta__hint">Coming next</span>
       </button>
     </div>

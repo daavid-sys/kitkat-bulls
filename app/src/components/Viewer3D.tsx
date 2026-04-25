@@ -14,6 +14,10 @@ const DEFAULT_VIEW = {
   height: 600,
 };
 
+const isCoarsePointer =
+  typeof window !== "undefined" &&
+  window.matchMedia?.("(pointer: coarse)").matches === true;
+
 export function Viewer3D({ location, loading }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const viewerRef = useRef<Cesium.Viewer | null>(null);
@@ -47,6 +51,9 @@ export function Viewer3D({ location, loading }: Props) {
       maximumRenderTimeChange: Infinity,
     });
 
+    // Lower DPR on coarse-pointer (mobile) for fewer pixels to shade.
+    if (isCoarsePointer) viewer.resolutionScale = 0.85;
+
     // Hide the Cesium ion credit; keep Google's attribution (the tileset adds it automatically).
     viewer.cesiumWidget.creditContainer
       .querySelectorAll<HTMLAnchorElement>("a")
@@ -56,6 +63,8 @@ export function Viewer3D({ location, loading }: Props) {
 
     viewer.scene.globe.show = false; // Photorealistic 3D Tiles replaces the globe.
     viewer.scene.screenSpaceCameraController.enableCollisionDetection = true;
+
+    tuneCameraControlsForTouch(viewer);
 
     viewerRef.current = viewer;
 
@@ -70,10 +79,13 @@ export function Viewer3D({ location, loading }: Props) {
           tileset.destroy();
           return;
         }
+        // Stream fewer/coarser tiles on mobile to keep memory + battery sane.
+        // Higher value = lower fidelity, much faster. ~24 is a sweet spot for phones.
+        tileset.maximumScreenSpaceError = isCoarsePointer ? 24 : 16;
         viewer.scene.primitives.add(tileset);
         tilesetRef.current = tileset;
 
-        // Idle camera — slow orbital drift around Berlin until the user submits an address.
+        // Idle camera — Brandenburg Gate while the homeowner reads the prompt.
         flyTo(viewer, DEFAULT_VIEW.longitude, DEFAULT_VIEW.latitude, DEFAULT_VIEW.height, 0);
       } catch (err) {
         console.error("Failed to load Google Photorealistic 3D Tiles", err);
@@ -101,6 +113,40 @@ export function Viewer3D({ location, loading }: Props) {
       {loading && <div className="viewer3d__shade" aria-hidden />}
     </div>
   );
+}
+
+function tuneCameraControlsForTouch(viewer: Cesium.Viewer) {
+  const c = viewer.scene.screenSpaceCameraController;
+
+  // We don't want users teleporting across the planet by accident.
+  // Restrict camera distance so they orbit *the house*, not Earth.
+  c.minimumZoomDistance = 60;
+  c.maximumZoomDistance = 1500;
+
+  // Inertia on touch feels nicer when slightly damped.
+  c.inertiaSpin = 0.6;
+  c.inertiaTranslate = 0.6;
+  c.inertiaZoom = 0.6;
+
+  // Lock to: one-finger orbit + two-finger pinch-zoom + two-finger tilt.
+  // Disable middle/right mouse buttons — meaningless on touch and confusing on desktop.
+  const { CameraEventType, KeyboardEventModifier } = Cesium;
+
+  c.rotateEventTypes = [CameraEventType.LEFT_DRAG];
+  c.zoomEventTypes = [
+    CameraEventType.WHEEL,
+    CameraEventType.PINCH,
+  ];
+  c.tiltEventTypes = [
+    CameraEventType.PINCH,
+    {
+      eventType: CameraEventType.LEFT_DRAG,
+      modifier: KeyboardEventModifier.SHIFT,
+    },
+  ];
+  // Disable look (free-fly) and translate — we want orbital, not free-roam.
+  c.lookEventTypes = [];
+  c.translateEventTypes = [];
 }
 
 function flyTo(
