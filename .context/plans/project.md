@@ -17,8 +17,10 @@ An AI-native flow that collapses 17 manual steps into ~2 minutes of self-serve:
 2. Their actual house appears in 3D (Google 3D Tiles / photogrammetry)
 3. AI auto-detects roof, places panels, selects components
 4. Instant proposal: cost, savings/year, break-even, 25-year ROI
-5. Voice narration walks them through it (Gradium)
-6. Homeowner refines, then submits to installer or signs digitally
+5. They input their phone number and an AI agent calls them (Gradium)
+6. Homeowner answer verification questions and sales qualificaitons questions, confirm a time when wants to be called back by a human
+7. Homeowner receive an email with all details
+8. Sales rep call the homeowner and close the sale
 
 ## The hackathon track
 Reonic Track at Big Berlin Hack 2026. Prize: 2,501 EUR + care package + team dinner with founders.
